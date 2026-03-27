@@ -44,7 +44,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       try {
         // Simulating backend request delay
         await new Promise((resolve) => setTimeout(resolve, 500));
-        
+
         // Mock current user - Change this role to "PI" to see the PI Dashboard
         setUser({ id: "1", name: "Dagmawi", role: "RAD", email: "admin@crmp.edu" });
       } catch (error) {
