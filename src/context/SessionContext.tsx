@@ -1,27 +1,27 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+// ============================================================
+// SESSION CONTEXT — Bridge between Zustand authStore and
+// existing components that already use useSession().
+//
+// Instead of a hardcoded mock user, this now reads from the
+// Zustand auth store. All existing sidebar/nav components
+// continue to work without modifications.
+// ============================================================
 
-// Matches the roles from admin_dashboard_role_access.md
-export type UserRole =
-  | "RAD"
-  | "RA"
-  | "ADRPM"
-  | "AC"
-  | "VPRTT"
-  | "Finance"
-  | "Coordinator"
-  | "Department"
-  | "College/School"
-  | "PGMO"
-  | "Examiner/Evaluator"
-  | "PI"
-  | null;
+import { createContext, useContext, type ReactNode } from "react";
+import { useAuthStore } from "@/stores/authStore";
+
+// Re-export UserRole from the canonical source so existing
+// imports like `import { UserRole } from "@/context/SessionContext"`
+// keep working without changes.
+export type { UserRole } from "@/lib/api/auth/types";
+import type { UserRole } from "@/lib/api/auth/types";
 
 export interface SessionUser {
   id: string;
   name: string;
-  role: UserRole;
+  role: UserRole | null;
   email: string;
 }
 
@@ -34,32 +34,30 @@ interface SessionContextType {
 const SessionContext = createContext<SessionContextType | undefined>(undefined);
 
 export function SessionProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<SessionUser | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // Read directly from Zustand — single source of truth
+  const { user: authUser, isLoading, logout } = useAuthStore();
 
-  useEffect(() => {
-    // This mocks fetching a session from your specific backend implementation
-    const checkSession = async () => {
-      setIsLoading(true);
-      try {
-        // Simulating backend request delay
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        
-        // Mock current user - Change this role to "PI" to see the PI Dashboard
-        setUser({ id: "1", name: "Dagmawi", role: "RAD", email: "admin@crmp.edu" });
-      } catch (error) {
-        console.error("No active session");
-        setUser(null);
-      } finally {
-        setIsLoading(false);
+  // Map the Zustand UserProfile shape → the SessionUser shape
+  // that existing components expect
+  const sessionUser: SessionUser | null = authUser
+    ? {
+        id: authUser.id,
+        name: authUser.fullName,
+        role: authUser.role,
+        email: authUser.email,
       }
-    };
+    : null;
 
-    checkSession();
-  }, []);
+  const setSession = (user: SessionUser | null) => {
+    if (!user) {
+      logout();
+    }
+    // For setting a user, use the Zustand login() action directly
+    // from wherever the login flow happens (e.g. SignInForm).
+  };
 
   return (
-    <SessionContext.Provider value={{ user, isLoading, setSession: setUser }}>
+    <SessionContext.Provider value={{ user: sessionUser, isLoading, setSession }}>
       {children}
     </SessionContext.Provider>
   );

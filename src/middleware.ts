@@ -1,34 +1,50 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(request: NextRequest) {
-  // Extracting dummy session cookie, e.g., 'user_role' = 'RAD' | 'PI' | etc.
-  // In a real app, this would be a JWT or an actual session token verified against a backend.
-  const roleCookie = request.cookies.get("user_role")?.value || "RAD"; // Fallback to "RAD" for demonstration
+// ============================================================
+// EDGE MIDDLEWARE — runs server-side before page renders.
+// Reads user_role and access_token cookies synced by
+// AuthInitializer. Protects all secured routes.
+// ============================================================
 
+export function middleware(request: NextRequest) {
+  const roleCookie = request.cookies.get("user_role")?.value;
+  const tokenCookie = request.cookies.get("access_token")?.value;
   const { pathname } = request.nextUrl;
 
-  // Protect /admin routes
-  if (pathname.startsWith("/admin")) {
-    // If the user is a PI, they shouldn't be in the admin section
-    if (roleCookie === "PI") {
-      return NextResponse.redirect(new URL("/pi", request.url));
-    }
+  // ── 1. Block unauthenticated access to protected routes ──
+  const isProtected =
+    pathname.startsWith("/admin") || pathname.startsWith("/dashboard") || pathname.startsWith("/pi");
+
+  if (isProtected && (!tokenCookie || !roleCookie)) {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
-  // Protect /pi routes
-  if (pathname.startsWith("/pi")) {
-    // If the user isn't a PI, send them to the admin dashboard
-    // Note: You might want to allow SuperAdmins to view PI dashboard in the future
-    if (roleCookie !== "PI") {
-      return NextResponse.redirect(new URL("/admin", request.url));
-    }
+  // ── 2. PI must not access /admin ─────────────────────────
+  if (pathname.startsWith("/admin") && roleCookie === "PI") {
+    return NextResponse.redirect(new URL("/pi", request.url));
+  }
+
+  // ── 3. Non-PI must not access /dashboard or /pi ──────────
+  const isPiOnly = pathname.startsWith("/dashboard") || pathname.startsWith("/pi");
+  if (isPiOnly && roleCookie !== "PI") {
+    return NextResponse.redirect(new URL("/admin", request.url));
+  }
+
+  // ── 4. Logged-in users skip login/signup/landing pages ───
+  const isAuthPage =
+    pathname === "/login" || pathname === "/signup" || pathname === "/";
+
+  if (isAuthPage && tokenCookie && roleCookie) {
+    const dest = roleCookie === "PI" ? "/pi" : "/admin";
+    return NextResponse.redirect(new URL(dest, request.url));
   }
 
   return NextResponse.next();
 }
 
-// Ensure the middleware only runs for paths under /admin and /pi
 export const config = {
-  matcher: ["/admin/:path*", "/pi/:path*"],
+  matcher: ["/", "/admin/:path*", "/dashboard/:path*", "/pi/:path*", "/login", "/signup"],
 };
