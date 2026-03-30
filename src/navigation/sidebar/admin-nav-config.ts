@@ -140,7 +140,7 @@ export const adminSidebarItems: NavGroup[] = [
   }
 ];
 
-export function getAuthorizedAdminNavItems(role: UserRole): NavGroup[] {
+export function getAuthorizedAdminNavItems(role: UserRole | null): NavGroup[] {
   if (!role || role === "PI") return []; // PI has no access to admin sidebar
 
   return adminSidebarItems.map(group => {

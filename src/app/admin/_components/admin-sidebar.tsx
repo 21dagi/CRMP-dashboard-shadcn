@@ -14,7 +14,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { APP_CONFIG } from "@/config/app-config";
-import { rootUser } from "@/data/users";
+
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 import { useSession } from "@/context/SessionContext";
 import { getAuthorizedAdminNavItems } from "@/navigation/sidebar/admin-nav-config";
@@ -65,7 +65,13 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
           </div>
         </SidebarMenu>
         {/* We can re-use the generic user menu component for Admin sidebar */}
-        <NavUser user={rootUser} />
+        <NavUser
+          user={{
+            name: user?.name || "Guest",
+            email: user?.email || "No email",
+            avatar: "", // Add avatar field if available in user profile
+          }}
+        />
       </SidebarFooter>
     </Sidebar>
   );
