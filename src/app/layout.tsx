@@ -10,6 +10,7 @@ import { PREFERENCE_DEFAULTS } from "@/lib/preferences/preferences-config";
 import { ThemeBootScript } from "@/scripts/theme-boot";
 import { PreferencesStoreProvider } from "@/stores/preferences/preferences-provider";
 import { SessionProvider } from "@/context/SessionContext";
+import { AuthInitializer } from "@/context/AuthInitializer";
 
 import "./globals.css";
 
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
             font={font}
           >
             <SessionProvider>
+              <AuthInitializer />
               {children}
               <Toaster />
             </SessionProvider>

@@ -43,7 +43,7 @@ export const sidebarItems: NavGroup[] = [
     items: [
       {
         title: "Dashboard",
-        url: "/dashboard",
+        url: "/pi",
         icon: LayoutDashboard,
       },
       {

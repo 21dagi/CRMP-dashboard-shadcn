@@ -1,0 +1,75 @@
+import { Metadata } from "next";
+import Link from "next/link";
+import { SignInForm } from "@/components/auth/SignInForm";
+import { SparklesCore } from "@/components/ui/sparkles"; // Optional if they have it, otherwise fallback gracefully, wait I will just use standard classes
+import { APP_CONFIG } from "@/config/app-config";
+
+export const metadata: Metadata = {
+  title: "Sign In | Collaborative Research Management Platform",
+  description: "Authenticate to access the CRMP dashboards for PIs and Administrators.",
+};
+
+export default function LoginPage() {
+  return (
+    <div className="flex min-h-[100dvh] w-full bg-slate-50 dark:bg-slate-950 font-sans">
+      {/* Left Panel: Graphic / Brand Side */}
+      <div className="relative hidden w-0 flex-1 flex-col justify-center border-r border-slate-200 bg-white px-10 pt-10 dark:border-slate-800 dark:bg-slate-900 lg:flex w-1/2">
+        <div className="absolute inset-0 z-0 bg-[url('/media/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+        
+        <div className="relative z-10 mx-auto max-w-xl text-center flex flex-col items-center justify-center">
+          <div className="mb-6 inline-flex h-16 items-center justify-center rounded-2xl bg-blue-600/10 p-4 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400 border border-blue-600/20">
+            {/* Logo placeholder */}
+            <svg
+              className="h-8 w-8"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 2L2 7l10 5 10-5-10-5Z" />
+              <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+          </div>
+          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
+            {APP_CONFIG.meta.title || "CRMP"} Access Portal
+          </h1>
+          <p className="mt-6 text-lg text-slate-600 dark:text-slate-400">
+            A secure gateway for Principal Investigators, Evaluators, and Administration logic. Use role-based assignments to safely manage and evaluate ongoing projects.
+          </p>
+        </div>
+      </div>
+
+      {/* Right Panel: Login Form Side */}
+      <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:w-1/2 lg:px-20 xl:px-24">
+        <div className="mx-auto w-full max-w-sm lg:w-96">
+          <div className="text-center lg:text-left">
+            <Link href="/" className="inline-flex lg:hidden mb-10 h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white">
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5Z" />
+              </svg>
+            </Link>
+
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+              Sign in to your account
+            </h2>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+              Need access?{" "}
+              <a href="#" className="font-semibold text-blue-600 hover:text-blue-500 dark:text-blue-400">
+                Contact your systemic administrator
+              </a>
+            </p>
+          </div>
+
+          <div className="mt-10">
+            <div className="bg-white px-6 py-8 shadow-sm ring-1 ring-slate-900/5 sm:rounded-xl dark:bg-slate-900 dark:ring-white/10 sm:px-12">
+              {/* Client Component handling state & submission */}
+              <SignInForm />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
