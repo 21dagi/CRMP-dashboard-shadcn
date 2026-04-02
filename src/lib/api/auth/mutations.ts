@@ -18,6 +18,7 @@ const USE_MOCK = true;
  * MOCK: resolves with fake data based on email.
  * REAL: POST /auth/login
  */
+
 export async function loginUser(credentials: LoginCredentials): Promise<LoginResponse> {
   if (USE_MOCK) {
     return getMockLoginResponse(credentials.email);

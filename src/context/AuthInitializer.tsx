@@ -28,9 +28,13 @@ export function AuthInitializer() {
 
   useEffect(() => {
     const initSession = async () => {
+      // Use getState() to safely read the latest hydrated token, 
+      // avoiding stale closures where access_token might be null on initial render
+      const currentToken = useAuthStore.getState().access_token;
+      
       setLoading(true);
 
-      if (!access_token) {
+      if (!currentToken) {
         // No token → clear stale cookies
         Cookies.remove(COOKIE_ROLE_KEY);
         Cookies.remove(COOKIE_TOKEN_KEY);
@@ -41,8 +45,8 @@ export function AuthInitializer() {
       try {
         const user = await getCurrentUser();
 
-        if (user) {
-          login(access_token, user);
+        if (user && currentToken) {
+          login(currentToken, user);
 
           // Sync to cookies for Edge Middleware to read
           Cookies.set(COOKIE_ROLE_KEY, user.role, {
@@ -50,7 +54,7 @@ export function AuthInitializer() {
             path: "/",
             sameSite: "lax",
           });
-          Cookies.set(COOKIE_TOKEN_KEY, access_token, {
+          Cookies.set(COOKIE_TOKEN_KEY, currentToken, {
             expires: COOKIE_TTL_DAYS,
             path: "/",
             sameSite: "lax",

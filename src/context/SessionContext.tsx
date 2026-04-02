@@ -41,11 +41,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   // that existing components expect
   const sessionUser: SessionUser | null = authUser
     ? {
-        id: authUser.id,
-        name: authUser.fullName,
-        role: authUser.role,
-        email: authUser.email,
-      }
+      id: authUser.id,
+      name: authUser.fullName,
+      role: authUser.role,
+      email: authUser.email,
+    }
     : null;
 
   const setSession = (user: SessionUser | null) => {
