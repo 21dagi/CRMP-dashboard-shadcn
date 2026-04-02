@@ -38,7 +38,7 @@ export function middleware(request: NextRequest) {
     pathname === "/login" || pathname === "/signup" || pathname === "/";
 
   if (isAuthPage && tokenCookie && roleCookie) {
-    const dest = roleCookie === "PI" ? "/pi" : "/admin";
+    const dest = roleCookie === "PI" ? "/dashboard" : "/admin";
     return NextResponse.redirect(new URL(dest, request.url));
   }
 

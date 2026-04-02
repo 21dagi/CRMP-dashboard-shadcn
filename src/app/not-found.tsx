@@ -7,11 +7,13 @@ import { Button } from "@/components/ui/button";
 import { useSession } from "@/context/SessionContext";
 
 export default function NotFound() {
-  const { user } = useSession();
+  const { user, isLoading } = useSession();
 
   // Determine the best home dashboard based on role
   const homePath = user?.role === "PI" ? "/pi" : "/admin";
   const backTo = user ? homePath : "/login";
+
+  if (isLoading) return null;
 
   return (
     <div className="flex h-dvh flex-col items-center justify-center space-y-4 text-center p-6">

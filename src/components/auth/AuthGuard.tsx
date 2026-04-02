@@ -56,3 +56,5 @@ export function AuthGuard({ children, allowedRoles }: AuthGuardProps) {
 
   return <>{children}</>;
 }
+
+
