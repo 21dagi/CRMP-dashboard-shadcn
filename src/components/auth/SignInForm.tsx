@@ -14,6 +14,7 @@ import { loginUser } from "@/lib/api/auth/mutations";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { hasPermission } from "@/access-control/permission-gates";
 
 const signInSchema = z.object({
   email: z.string().email("Please enter a valid email address."),
@@ -51,8 +52,12 @@ export function SignInForm() {
       login(response.access_token, response.user);
 
       // Sync cookies immediately so middleware recognizes this user on redirect
-      Cookies.set("user_role", response.user.role, { expires: 7, path: "/", sameSite: "lax" });
       Cookies.set("access_token", response.access_token, { expires: 7, path: "/", sameSite: "lax" });
+      Cookies.set("user_permissions", JSON.stringify(response.user.permissions ?? []), {
+        expires: 7,
+        path: "/",
+        sameSite: "lax",
+      });
 
       toast.success("Welcome back!", {
         description: `Signed in as ${response.user.fullName} (${response.user.role})`
@@ -62,11 +67,8 @@ export function SignInForm() {
       if (redirect) {
         router.push(redirect);
       } else {
-        if (response.user.role === "PI") {
-          router.push("/pi");
-        } else {
-          router.push("/admin");
-        }
+        const canCreateProjects = hasPermission(response.user.permissions ?? [], "PROJECT_CREATE");
+        router.push(canCreateProjects ? "/dashboard" : "/admin");
       }
     } catch (error) {
       toast.error("Sign In Failed", {

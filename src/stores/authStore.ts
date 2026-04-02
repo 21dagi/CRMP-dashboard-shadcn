@@ -5,12 +5,7 @@
 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import type { UserProfile, UserRole } from "@/lib/api/auth/types";
-
-const ADMIN_ROLE_LIST: UserRole[] = [
-  "RAD", "RA", "ADRPM", "AC", "VPRTT", "Finance",
-  "Coordinator", "Department", "College/School", "PGMO", "Examiner/Evaluator",
-];
+import type { UserProfile } from "@/lib/api/auth/types";
 
 interface AuthState {
   // State
@@ -18,11 +13,6 @@ interface AuthState {
   user: UserProfile | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-
-  // Derived helpers
-  isPI: () => boolean;
-  isAdmin: () => boolean;
-  hasRole: (role: UserRole) => boolean;
 
   // Actions
   login: (token: string, user: UserProfile) => void;
@@ -39,14 +29,6 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       isAuthenticated: false,
       isLoading: true,
-
-      // Derived helpers
-      isPI: () => get().user?.role === "PI",
-      isAdmin: () => {
-        const role = get().user?.role;
-        return role ? ADMIN_ROLE_LIST.includes(role) : false;
-      },
-      hasRole: (role: UserRole) => get().user?.role === role,
 
       // Save token + user after successful login
       login: (token: string, user: UserProfile) =>

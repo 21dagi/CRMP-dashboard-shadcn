@@ -15,13 +15,14 @@ import {
   LucideIcon
 } from "lucide-react";
 
-import { UserRole } from "@/context/SessionContext";
+import { ADMIN_SIDEBAR_PERMISSION_RULES } from "@/access-control/sidebar-permission-config";
+import { hasPermission } from "@/access-control/permission-gates";
+import { SIDEBAR_UNCONFIGURED_ROUTES_VISIBILITY } from "@/access-control/sidebar-permission-config";
 
 export interface NavMainItem {
   title: string;
   url: string;
   icon: LucideIcon;
-  allowedRoles?: UserRole[]; // If undefined, available to all
   subItems?: { title: string; url: string }[];
 }
 
@@ -30,21 +31,6 @@ export interface NavGroup {
   label?: string;
   items: NavMainItem[];
 }
-
-// Complete list of all roles based on the matrix
-const ALL_ADMIN_ROLES: UserRole[] = [
-  "RAD", "RA", "ADRPM", "AC", "VPRTT", "Finance", 
-  "Coordinator", "Department", "College/School", "PGMO", "Examiner/Evaluator"
-];
-
-// Reusable arrays for permissions based on the role access matrix
-const NO_FINANCE_PGMO: UserRole[] = ALL_ADMIN_ROLES.filter(r => r !== "Finance" && r !== "PGMO");
-const PROGRESS_ROLES: UserRole[] = ["RAD", "RA", "ADRPM", "AC", "Finance", "VPRTT"];
-const BUDGET_ROLES: UserRole[] = ["RAD", "RA", "ADRPM", "AC", "VPRTT", "Finance"];
-const REQUEST_ROLES: UserRole[] = ["RAD", "RA", "ADRPM", "AC", "VPRTT", "Finance", "Coordinator", "Department"];
-const PUBLICATION_ROLES: UserRole[] = ["RAD", "RA", "ADRPM", "AC", "VPRTT", "PGMO"];
-const SUPER_ADMIN_ROLES: UserRole[] = ["RAD", "ADRPM", "AC"];
-const AUDIT_ROLES: UserRole[] = ["RAD", "ADRPM", "AC", "Finance"];
 
 export const adminSidebarItems: NavGroup[] = [
   {
@@ -65,19 +51,16 @@ export const adminSidebarItems: NavGroup[] = [
         title: "Proposals",
         url: "/admin/proposals",
         icon: FileText,
-        allowedRoles: NO_FINANCE_PGMO,
       },
       {
         title: "Evaluations",
         url: "/admin/evaluations",
         icon: CheckSquare,
-        allowedRoles: NO_FINANCE_PGMO,
       },
       {
         title: "Progress",
         url: "/admin/progress",
         icon: Activity,
-        allowedRoles: PROGRESS_ROLES,
       },
     ],
   },
@@ -89,25 +72,21 @@ export const adminSidebarItems: NavGroup[] = [
         title: "Budget",
         url: "/admin/budget",
         icon: DollarSign,
-        allowedRoles: BUDGET_ROLES,
       },
       {
         title: "Requests",
         url: "/admin/requests",
         icon: MessageSquare,
-        allowedRoles: REQUEST_ROLES,
       },
       {
         title: "Publications",
         url: "/admin/publications",
         icon: BookOpen,
-        allowedRoles: PUBLICATION_ROLES,
       },
       {
         title: "Users & Roles",
         url: "/admin/users",
         icon: Users,
-        allowedRoles: SUPER_ADMIN_ROLES,
       },
     ],
   },
@@ -129,7 +108,6 @@ export const adminSidebarItems: NavGroup[] = [
         title: "Audit Log",
         url: "/admin/audit",
         icon: History,
-        allowedRoles: AUDIT_ROLES,
       },
       {
         title: "Settings",
@@ -140,21 +118,30 @@ export const adminSidebarItems: NavGroup[] = [
   }
 ];
 
-export function getAuthorizedAdminNavItems(role: UserRole | null): NavGroup[] {
-  if (!role || role === "PI") return []; // PI has no access to admin sidebar
+export function getAuthorizedAdminNavItems(permissions: string[] | null | undefined): NavGroup[] {
+  const safePermissions = permissions ?? [];
 
-  return adminSidebarItems.map(group => {
-    // Filter items based on user role
-    const filteredItems = group.items.filter(item => {
-      // If no roles specified, it's public for all admins
-      if (!item.allowedRoles) return true;
-      // Otherwise, see if current role is in allowed list
-      return item.allowedRoles.includes(role);
-    });
+  // PI space permission is `PROJECT_CREATE`. Admin sidebar should be hidden for PI users.
+  // (The `/admin` routes themselves are protected by `AdminPermissionGuard`.)
+  if (hasPermission(safePermissions, "PROJECT_CREATE")) return [];
 
-    return {
-      ...group,
-      items: filteredItems
-    };
-  }).filter(group => group.items.length > 0); // Remove empty groups
+  return adminSidebarItems
+    .map((group) => {
+      const filteredItems = group.items.filter((item) => {
+        const required = ADMIN_SIDEBAR_PERMISSION_RULES[item.url];
+        // Unknown routes visibility is configurable.
+        if (!required || required.length === 0) {
+          return SIDEBAR_UNCONFIGURED_ROUTES_VISIBILITY === "visible";
+        }
+
+        // Sidebar visibility uses OR semantics: show if the user has any required permission.
+        return required.some((p) => hasPermission(safePermissions, p));
+      });
+
+      return {
+        ...group,
+        items: filteredItems,
+      };
+    })
+    .filter((group) => group.items.length > 0);
 }

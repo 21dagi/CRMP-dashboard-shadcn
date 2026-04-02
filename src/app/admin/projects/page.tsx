@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { RoleGuard } from "@/components/auth/role-guard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -44,6 +43,7 @@ import {
   Users,
   XCircle,
 } from "lucide-react";
+import { Can } from "@/access-control/permission-gates";
 
 // ─── TYPES ──────────────────────────────────────────────────────────
 interface TeamMember {
@@ -257,11 +257,11 @@ export default function AdminProjectsPage() {
           </h1>
           <p className="text-sm text-slate-500 mt-0.5">Manage and inspect all active university research projects.</p>
         </div>
-        <RoleGuard allowedRoles={["RAD", "Finance", "ADRPM", "AC"]}>
+        <Can permission="ADMIN_VIEW">
           <Button className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm h-9 font-semibold text-sm rounded-lg">
             <Download className="w-4 h-4 mr-2" /> Export Registry
           </Button>
-        </RoleGuard>
+        </Can>
       </div>
 
       {/* ── Filter Bar ── */}
@@ -489,16 +489,17 @@ export default function AdminProjectsPage() {
                     <div>
                       <h4 className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-3">Admin Actions</h4>
                       <div className="flex flex-wrap gap-2">
-                        <RoleGuard allowedRoles={["RAD", "ADRPM", "AC", "Finance", "VPRTT"]}>
+                        <Can permission="BUDGET_APPROVE">
                           <Button size="sm" variant="outline" className="text-xs h-8 font-semibold">
                             Approve Budget Release
                           </Button>
-                        </RoleGuard>
-                        <RoleGuard allowedRoles={["RAD", "Coordinator"]}>
+                        </Can>
+
+                        <Can permission="PROJECT_REJECT">
                           <Button size="sm" variant="outline" className="text-xs h-8 font-semibold text-red-600 border-red-200 dark:border-red-900 hover:bg-red-50 dark:hover:bg-red-900/20">
                             Suspend / Terminate
                           </Button>
-                        </RoleGuard>
+                        </Can>
                         <Button size="sm" variant="outline" className="text-xs h-8 font-semibold">
                           View Report
                         </Button>

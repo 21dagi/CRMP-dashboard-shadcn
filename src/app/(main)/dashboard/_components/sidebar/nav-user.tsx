@@ -34,8 +34,8 @@ export function NavUser({
 
   const handleLogout = () => {
     logout();
-    Cookies.remove("user_role");
     Cookies.remove("access_token");
+    Cookies.remove("user_permissions");
     router.push("/login");
   };
 

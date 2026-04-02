@@ -36,9 +36,8 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
   const variant = isSynced ? sidebarVariant : props.variant;
   const collapsible = isSynced ? sidebarCollapsible : props.collapsible;
 
-  // Dynamically compute the sidebar items based on the logged in role
-  // Default to empty array if no user or role is undefined
-  const dynamicNavItems = getAuthorizedAdminNavItems(user?.role || null);
+  // Permission-driven sidebar filtering (no role-based gating).
+  const dynamicNavItems = getAuthorizedAdminNavItems(user?.permissions ?? []);
 
   return (
     <Sidebar {...props} variant={variant} collapsible={collapsible}>

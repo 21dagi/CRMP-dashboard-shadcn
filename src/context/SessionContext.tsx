@@ -23,6 +23,7 @@ export interface SessionUser {
   name: string;
   role: UserRole | null;
   email: string;
+  permissions?: string[];
 }
 
 interface SessionContextType {
@@ -43,8 +44,9 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     ? {
       id: authUser.id,
       name: authUser.fullName,
-      role: authUser.role,
+      role: authUser.role ?? null,
       email: authUser.email,
+      permissions: authUser.permissions,
     }
     : null;
 

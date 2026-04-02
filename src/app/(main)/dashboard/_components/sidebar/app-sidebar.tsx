@@ -17,6 +17,10 @@ import {
 import { APP_CONFIG } from "@/config/app-config";
 import { rootUser } from "@/data/users";
 import { sidebarItems } from "@/navigation/sidebar/sidebar-items";
+import { useSession } from "@/context/SessionContext";
+import { DASHBOARD_SIDEBAR_PERMISSION_RULES } from "@/access-control/sidebar-permission-config";
+import { hasPermission } from "@/access-control/permission-gates";
+import { SIDEBAR_UNCONFIGURED_ROUTES_VISIBILITY } from "@/access-control/sidebar-permission-config";
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 
 import { NavMain } from "./nav-main";
@@ -69,8 +73,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     })),
   );
 
+  const { user, isLoading } = useSession();
   const variant = isSynced ? sidebarVariant : props.variant;
   const collapsible = isSynced ? sidebarCollapsible : props.collapsible;
+
+  const filteredNavGroups = isLoading
+    ? []
+    : sidebarItems
+        .map((group) => ({
+          ...group,
+          items: group.items.filter((item) => {
+            const required = DASHBOARD_SIDEBAR_PERMISSION_RULES[item.url];
+            // Unknown routes are treated as hidden (principle of least privilege).
+            if (!required || required.length === 0) {
+              return SIDEBAR_UNCONFIGURED_ROUTES_VISIBILITY === "visible";
+            }
+
+            // Sidebar visibility uses OR semantics: show if the user has any required permission.
+            return required.some((p) => hasPermission(user?.permissions ?? [], p));
+          }),
+        }))
+        .filter((group) => group.items.length > 0);
 
   return (
     <Sidebar {...props} variant={variant} collapsible={collapsible}>
@@ -78,7 +101,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <Link prefetch={false} href="/dashboard/default">
+              <Link prefetch={false} href="/dashboard">
                 <Command />
                 <span className="font-semibold text-base">{APP_CONFIG.name}</span>
               </Link>
@@ -87,7 +110,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={sidebarItems} />
+        <NavMain items={filteredNavGroups} />
         {/* <NavDocuments items={data.documents} /> */}
         {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>

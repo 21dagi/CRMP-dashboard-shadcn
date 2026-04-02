@@ -3,24 +3,23 @@
 // ============================================================
 // AUTH INITIALIZER
 // Invisible component — mounts on app start inside RootLayout.
-// Validates the persisted Zustand session and syncs the role
-// to a cookie so Edge Middleware can read it server-side.
+// Validates the persisted Zustand session and syncs auth cookies
+// so Edge Middleware can do fast presence checks.
 //
 // Flow:
 //   App loads → mounts → reads Zustand (from localStorage)
 //     → if token exists: calls getCurrentUser() to validate
-//     → if valid: syncs user_role + access_token cookies
+//     → if valid: syncs access_token + user_permissions cookies
 //     → if invalid: calls logout() and clears cookies
 // ============================================================
 
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useAuthStore } from "@/stores/authStore";
-import type { UserRole } from "@/lib/api/auth/types";
 import { getCurrentUser } from "@/lib/api/auth/queries";
 
-const COOKIE_ROLE_KEY = "user_role";
 const COOKIE_TOKEN_KEY = "access_token";
+const COOKIE_PERMISSIONS_KEY = "user_permissions";
 const COOKIE_TTL_DAYS = 7;
 
 export function AuthInitializer() {
@@ -36,8 +35,8 @@ export function AuthInitializer() {
 
       if (!currentToken) {
         // No token → clear stale cookies
-        Cookies.remove(COOKIE_ROLE_KEY);
         Cookies.remove(COOKIE_TOKEN_KEY);
+        Cookies.remove(COOKIE_PERMISSIONS_KEY);
         setLoading(false);
         return;
       }
@@ -48,26 +47,26 @@ export function AuthInitializer() {
         if (user && currentToken) {
           login(currentToken, user);
 
-          // Sync to cookies for Edge Middleware to read
-          Cookies.set(COOKIE_ROLE_KEY, user.role, {
+          // Sync to cookies (optional but useful for server-side access later).
+          Cookies.set(COOKIE_TOKEN_KEY, currentToken, {
             expires: COOKIE_TTL_DAYS,
             path: "/",
             sameSite: "lax",
           });
-          Cookies.set(COOKIE_TOKEN_KEY, currentToken, {
+          Cookies.set(COOKIE_PERMISSIONS_KEY, JSON.stringify(user.permissions ?? []), {
             expires: COOKIE_TTL_DAYS,
             path: "/",
             sameSite: "lax",
           });
         } else {
           logout();
-          Cookies.remove(COOKIE_ROLE_KEY);
           Cookies.remove(COOKIE_TOKEN_KEY);
+          Cookies.remove(COOKIE_PERMISSIONS_KEY);
         }
       } catch {
         logout();
-        Cookies.remove(COOKIE_ROLE_KEY);
         Cookies.remove(COOKIE_TOKEN_KEY);
+        Cookies.remove(COOKIE_PERMISSIONS_KEY);
       } finally {
         setLoading(false);
       }

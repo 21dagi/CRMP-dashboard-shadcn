@@ -5,12 +5,13 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 import { useSession } from "@/context/SessionContext";
+import { hasPermission } from "@/access-control/permission-gates";
 
 export default function NotFound() {
   const { user, isLoading } = useSession();
 
-  // Determine the best home dashboard based on role
-  const homePath = user?.role === "PI" ? "/pi" : "/admin";
+  // Determine best home based on permissions (no role-based routing).
+  const homePath = hasPermission(user?.permissions ?? [], "PROJECT_CREATE") ? "/dashboard" : "/admin";
   const backTo = user ? homePath : "/login";
 
   if (isLoading) return null;

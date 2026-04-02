@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { RoleGuard } from "@/components/auth/role-guard";
+import { Can } from "@/access-control/permission-gates";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -480,7 +480,7 @@ export default function AdminProposalsPage() {
                       <div className="flex flex-col gap-2">
 
                         {/* Assign Evaluator — only if Submitted */}
-                        <RoleGuard allowedRoles={["RAD", "RA", "ADRPM", "AC", "VPRTT"]}>
+                        <Can permission="EVALUATOR_ASSIGN">
                           {(selected.status === "Submitted" || selected.status === "Under Review") && (
                             <button
                               onClick={() => setShowAssign(true)}
@@ -500,10 +500,10 @@ export default function AdminProposalsPage() {
                               <ChevronRight className="w-4 h-4 ml-auto opacity-50 group-hover:opacity-100" />
                             </button>
                           )}
-                        </RoleGuard>
+                        </Can>
 
                         {/* Return for Revision — only if Under Review */}
-                        <RoleGuard allowedRoles={["RAD", "RA", "ADRPM", "AC", "VPRTT", "Coordinator", "Department"]}>
+                        <Can permission="PROJECT_REJECT">
                           {(selected.status === "Submitted" || selected.status === "Under Review") && (
                             <button
                               onClick={() => setShowRevision(true)}
@@ -519,7 +519,7 @@ export default function AdminProposalsPage() {
                               <ChevronRight className="w-4 h-4 ml-auto opacity-50 group-hover:opacity-100" />
                             </button>
                           )}
-                        </RoleGuard>
+                        </Can>
 
                         {/* Info notice about approval */}
                         <div className="flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/30 text-slate-500">

@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { ThemeSwitcher } from "@/app/(main)/dashboard/_components/sidebar/theme-switcher";
 import { AdminSidebar } from "./_components/admin-sidebar";
+import { AdminPermissionGuard } from "@/access-control/AdminPermissionGuard";
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const cookieStore = await cookies();
@@ -22,7 +23,9 @@ export default async function AdminLayout({ children }: { children: ReactNode })
             <ThemeSwitcher />
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <AdminPermissionGuard>{children}</AdminPermissionGuard>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );
