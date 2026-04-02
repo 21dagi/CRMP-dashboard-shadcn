@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 
-import NotFoundPage from "@/app/not-found";
+import NotFoundPage from "@/app/404";
 import { useAuthStore } from "@/stores/authStore";
 
 /**
@@ -14,6 +14,13 @@ import { useAuthStore } from "@/stores/authStore";
  * - Your UI should always use these canonical strings.
  * - `normalizePermission()` is defensive and may accept aliases while you
  *   migrate between backend permission naming styles.
+ * 
+ * 
+ * d permission-gating utilities in src/access-control/ as
+ *  real React components (client-side) that read permissions 
+ * from the existing Zustand auth store, wait for session readiness
+ *  to avoid UI flashes, and on denial show the existing src/app/not-found.tsx 
+ * UI while redirecting back (or to /login).
  */
 export type Permission =
   | "PROJECT_CREATE"
