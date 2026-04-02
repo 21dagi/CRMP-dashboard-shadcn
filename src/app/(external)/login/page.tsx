@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { SignInForm } from "@/components/auth/SignInForm";
-import { SparklesCore } from "@/components/ui/sparkles"; // Optional if they have it, otherwise fallback gracefully, wait I will just use standard classes
 import { APP_CONFIG } from "@/config/app-config";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Sign In | Collaborative Research Management Platform",
@@ -65,7 +65,9 @@ export default function LoginPage() {
           <div className="mt-10">
             <div className="bg-white px-6 py-8 shadow-sm ring-1 ring-slate-900/5 sm:rounded-xl dark:bg-slate-900 dark:ring-white/10 sm:px-12">
               {/* Client Component handling state & submission */}
-              <SignInForm />
+              <Suspense fallback={null}>
+                <SignInForm />
+              </Suspense>
             </div>
           </div>
         </div>
