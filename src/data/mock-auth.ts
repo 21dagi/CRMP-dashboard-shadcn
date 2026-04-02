@@ -55,7 +55,21 @@ const MOCK_USERS: Record<string, LoginResponse> = {
       role: "Coordinator",
       department: "Research Coordination Office",
       avatarUrl: "",
-      permissions: ["review_proposal", "assign_evaluator"],
+      // Coordinator is an admin-space user: full access to /admin, no access to /dashboard (PI space).
+      // Important: DO NOT include `PROJECT_CREATE` here, otherwise the user will be treated as PI and redirected to /dashboard.
+      permissions: [
+        "ADMIN_VIEW",
+        "ADMIN_EDIT",
+        "USER_VIEW",
+
+        "PROJECT_VIEW",
+        "PROJECT_REVIEW",
+        "PROJECT_APPROVE",
+        "PROJECT_REJECT",
+        "EVALUATOR_ASSIGN",
+
+        
+      ],
     },
   },
 };

@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -13,20 +12,17 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   ArrowLeft,
   Calendar,
   CheckCircle2,
-  Clock,
   Download,
   Edit,
   FileText,
   History,
   MessageSquare,
-  MoreVertical,
   Paperclip,
   Send,
   User,
@@ -84,31 +80,31 @@ export default function ProposalDetailsPage() {
   ];
 
   return (
-    <div className="flex flex-1 flex-col gap-6 p-6 lg:p-10 max-w-7xl mx-auto w-full">
+    <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 p-6 lg:p-10">
       {/* Top Navigation */}
-      <div className="flex items-center gap-2 mb-2">
+      <div className="mb-2 flex items-center gap-2">
         <Link href="/dashboard/proposals">
-          <Button variant="ghost" size="sm" className="h-8 shadow-none text-slate-500 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+          <Button variant="ghost" size="sm" className="h-8 rounded-full text-slate-500 shadow-none hover:bg-slate-100 dark:hover:bg-slate-800">
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Proposals
           </Button>
         </Link>
       </div>
 
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 bg-white dark:bg-slate-950/50 p-6 rounded-2xl border border-slate-200/50 dark:border-slate-800/50 shadow-sm">
-        <div className="flex flex-col gap-3 flex-1">
+      <div className="flex flex-col items-start justify-between gap-6 rounded-2xl border border-slate-200/50 bg-white p-6 shadow-sm md:flex-row md:items-end dark:border-slate-800/50 dark:bg-slate-950/50">
+        <div className="flex flex-1 flex-col gap-3">
           <div className="flex items-center gap-3">
-            <Badge variant="outline" className="text-xs font-semibold px-2 py-0.5 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700">
+            <Badge variant="outline" className="border-slate-200 px-2 py-0.5 font-semibold text-slate-500 text-xs dark:border-slate-700 dark:text-slate-400">
               {proposal.id}
             </Badge>
-            <Badge variant="outline" className={`${proposal.color} shadow-none inline-flex items-center rounded px-2.5 py-0.5 font-medium`}>
+            <Badge variant="outline" className={`${proposal.color} inline-flex items-center rounded px-2.5 py-0.5 font-medium shadow-none`}>
               {proposal.status}
             </Badge>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+          <h1 className="font-bold text-2xl text-slate-900 tracking-tight md:text-3xl dark:text-slate-100">
             {proposal.title}
           </h1>
-          <div className="flex items-center gap-4 text-sm text-slate-500 font-medium">
+          <div className="flex items-center gap-4 font-medium text-slate-500 text-sm">
             <div className="flex items-center gap-1.5">
               <User className="h-4 w-4" /> {proposal.investigator}
             </div>
@@ -118,35 +114,35 @@ export default function ProposalDetailsPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3 w-full md:w-auto">
-          <Button variant="outline" className="flex-1 md:flex-auto rounded-full font-medium">
+        <div className="flex w-full items-center gap-3 md:w-auto">
+          <Button variant="outline" className="flex-1 rounded-full font-medium md:flex-auto">
             <Download className="mr-2 h-4 w-4" /> Export PDF
           </Button>
-          <Button className="flex-1 md:flex-auto bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium border-0 shadow-sm">
+          <Button className="flex-1 rounded-full border-0 bg-blue-600 font-medium text-white shadow-sm hover:bg-blue-700 md:flex-auto">
             <Edit className="mr-2 h-4 w-4" /> Edit Proposal
           </Button>
         </div>
       </div>
 
       {/* Tabs Layout */}
-      <Tabs defaultValue="overview" className="w-full mt-2">
-        <TabsList className="bg-transparent p-0 border-b border-slate-200 dark:border-slate-800 w-full justify-start rounded-none h-12 flex-nowrap overflow-x-auto scrollbar-hide">
+      <Tabs defaultValue="overview" className="mt-2 w-full">
+        <TabsList className="scrollbar-hide h-12 w-full flex-nowrap justify-start overflow-x-auto rounded-none border-slate-200 border-b bg-transparent p-0 dark:border-slate-800">
           <TabsTrigger 
             value="overview" 
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-blue-600 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-blue-700 dark:data-[state=active]:text-blue-400 py-3 px-6 font-medium text-slate-500"
+            className="rounded-none border-transparent border-b-2 px-6 py-3 font-medium text-slate-500 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent data-[state=active]:text-blue-700 data-[state=active]:shadow-none dark:data-[state=active]:text-blue-400"
           >
             <FileText className="mr-2 h-4 w-4" /> Overview
           </TabsTrigger>
           <TabsTrigger 
             value="feedback" 
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-blue-600 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-blue-700 dark:data-[state=active]:text-blue-400 py-3 px-6 font-medium text-slate-500"
+            className="rounded-none border-transparent border-b-2 px-6 py-3 font-medium text-slate-500 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent data-[state=active]:text-blue-700 data-[state=active]:shadow-none dark:data-[state=active]:text-blue-400"
           >
             <MessageSquare className="mr-2 h-4 w-4" /> Feedback & Comments
-            <Badge className="ml-2 bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 border-0 hover:bg-amber-100 rounded-full px-1.5 py-0 h-4">1</Badge>
+            <Badge className="ml-2 h-4 rounded-full border-0 bg-amber-100 px-1.5 py-0 text-amber-700 hover:bg-amber-100 dark:bg-amber-900/30 dark:text-amber-400">1</Badge>
           </TabsTrigger>
           <TabsTrigger 
             value="history" 
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-blue-600 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:text-blue-700 dark:data-[state=active]:text-blue-400 py-3 px-6 font-medium text-slate-500"
+            className="rounded-none border-transparent border-b-2 px-6 py-3 font-medium text-slate-500 data-[state=active]:border-blue-600 data-[state=active]:bg-transparent data-[state=active]:text-blue-700 data-[state=active]:shadow-none dark:data-[state=active]:text-blue-400"
           >
             <History className="mr-2 h-4 w-4" /> Version History
           </TabsTrigger>
@@ -155,28 +151,28 @@ export default function ProposalDetailsPage() {
         <div className="py-6">
           {/* Overview Tab */}
           <TabsContent value="overview" className="mt-0 focus-visible:outline-none">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
               {/* Main Content */}
-              <div className="lg:col-span-2 flex flex-col gap-6">
-                <Card className="shadow-none border-slate-200/50 dark:border-slate-800/50 rounded-xl overflow-hidden">
-                  <CardHeader className="bg-slate-50/50 dark:bg-slate-900/10 border-b border-slate-100 dark:border-slate-800 pb-4">
+              <div className="flex flex-col gap-6 lg:col-span-2">
+                <Card className="overflow-hidden rounded-xl border-slate-200/50 shadow-none dark:border-slate-800/50">
+                  <CardHeader className="border-slate-100 border-b bg-slate-50/50 pb-4 dark:border-slate-800 dark:bg-slate-900/10">
                     <CardTitle className="text-lg text-slate-800 dark:text-slate-200">Abstract</CardTitle>
                   </CardHeader>
-                  <CardContent className="p-6 text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
+                  <CardContent className="p-6 text-slate-600 text-sm leading-relaxed dark:text-slate-400">
                     {proposal.abstract}
                   </CardContent>
                 </Card>
 
-                <Card className="shadow-none border-slate-200/50 dark:border-slate-800/50 rounded-xl overflow-hidden">
-                  <CardHeader className="bg-slate-50/50 dark:bg-slate-900/10 border-b border-slate-100 dark:border-slate-800 pb-4">
+                <Card className="overflow-hidden rounded-xl border-slate-200/50 shadow-none dark:border-slate-800/50">
+                  <CardHeader className="border-slate-100 border-b bg-slate-50/50 pb-4 dark:border-slate-800 dark:bg-slate-900/10">
                     <CardTitle className="text-lg text-slate-800 dark:text-slate-200">Key Objectives</CardTitle>
                   </CardHeader>
                   <CardContent className="p-6">
                     <ul className="space-y-3">
-                      {proposal.objectives.map((obj, i) => (
-                        <li key={i} className="flex gap-3 text-sm text-slate-600 dark:text-slate-400 bg-slate-50/50 dark:bg-slate-900/20 p-3 rounded-lg border border-slate-100 dark:border-slate-800">
-                          <CheckCircle2 className="h-5 w-5 text-blue-500 shrink-0" />
-                          <span className="leading-tight mt-0.5">{obj}</span>
+                      {proposal.objectives.map((obj) => (
+                        <li key={obj} className="flex gap-3 rounded-lg border border-slate-100 bg-slate-50/50 p-3 text-slate-600 text-sm dark:border-slate-800 dark:bg-slate-900/20 dark:text-slate-400">
+                          <CheckCircle2 className="h-5 w-5 shrink-0 text-blue-500" />
+                          <span className="mt-0.5 leading-tight">{obj}</span>
                         </li>
                       ))}
                     </ul>
@@ -186,33 +182,33 @@ export default function ProposalDetailsPage() {
 
               {/* Sidebar Details */}
               <div className="flex flex-col gap-6">
-                <Card className="shadow-none border-slate-200/50 dark:border-slate-800/50 rounded-xl">
+                <Card className="rounded-xl border-slate-200/50 shadow-none dark:border-slate-800/50">
                   <CardHeader className="pb-4">
                     <CardTitle className="text-base text-slate-800 dark:text-slate-200">Proposal Information</CardTitle>
                   </CardHeader>
                   <CardContent className="flex flex-col gap-4 text-sm">
-                    <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
-                      <span className="text-slate-500 font-medium">Department</span>
+                    <div className="flex items-center justify-between border-slate-100 border-b py-2 dark:border-slate-800">
+                      <span className="font-medium text-slate-500">Department</span>
                       <span className="font-semibold text-slate-800 dark:text-slate-200">{proposal.department}</span>
                     </div>
-                    <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
-                      <span className="text-slate-500 font-medium">Est. Budget</span>
+                    <div className="flex items-center justify-between border-slate-100 border-b py-2 dark:border-slate-800">
+                      <span className="font-medium text-slate-500">Est. Budget</span>
                       <span className="font-semibold text-slate-800 dark:text-slate-200">{proposal.budget}</span>
                     </div>
-                    <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800">
-                      <span className="text-slate-500 font-medium">Current Version</span>
-                      <Badge variant="secondary" className="font-semibold rounded">{proposal.version}</Badge>
+                    <div className="flex items-center justify-between border-slate-100 border-b py-2 dark:border-slate-800">
+                      <span className="font-medium text-slate-500">Current Version</span>
+                      <Badge variant="secondary" className="rounded font-semibold">{proposal.version}</Badge>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card className="shadow-none border-slate-200/50 dark:border-slate-800/50 rounded-xl bg-blue-50/50 dark:bg-blue-900/10 border-blue-100 dark:border-blue-900/50">
+                <Card className="rounded-xl border-blue-100 border-slate-200/50 bg-blue-50/50 shadow-none dark:border-blue-900/50 dark:border-slate-800/50 dark:bg-blue-900/10">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base text-blue-800 dark:text-blue-300">Required Action</CardTitle>
                   </CardHeader>
-                  <CardContent className="text-sm text-blue-700/80 dark:text-blue-400">
+                  <CardContent className="text-blue-700/80 text-sm dark:text-blue-400">
                     <p className="mb-4">This proposal requires revisions based on evaluator feedback before it can move forward.</p>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium shadow-sm transition-all border-0">
+                    <Button className="w-full rounded-full border-0 bg-blue-600 font-medium text-white shadow-sm transition-all hover:bg-blue-700">
                       Review Feedback
                     </Button>
                   </CardContent>
@@ -223,37 +219,37 @@ export default function ProposalDetailsPage() {
 
           {/* Feedback Tab */}
           <TabsContent value="feedback" className="mt-0 focus-visible:outline-none">
-            <Card className="shadow-none border-slate-200/50 dark:border-slate-800/50 rounded-xl overflow-hidden flex flex-col md:flex-row min-h-[500px]">
+            <Card className="flex min-h-[500px] flex-col overflow-hidden rounded-xl border-slate-200/50 shadow-none md:flex-row dark:border-slate-800/50">
               
               {/* Feedback List */}
-              <div className="w-full md:w-1/2 lg:w-3/5 border-r border-slate-100 dark:border-slate-800 flex flex-col bg-slate-50/30 dark:bg-slate-900/10">
-                <div className="p-4 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950 font-semibold text-slate-800 dark:text-slate-200">
+              <div className="flex w-full flex-col border-slate-100 border-r bg-slate-50/30 md:w-1/2 lg:w-3/5 dark:border-slate-800 dark:bg-slate-900/10">
+                <div className="border-slate-100 border-b bg-white p-4 font-semibold text-slate-800 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200">
                   Reviewer Comments
                 </div>
-                <div className="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
+                <div className="flex flex-1 flex-col gap-6 overflow-y-auto p-6">
                   {feedback.map((fb) => (
-                    <div key={fb.id} className="flex gap-4 items-start">
+                    <div key={fb.id} className="flex items-start gap-4">
                       <Avatar className={`h-10 w-10 border ${fb.type === 'revision' ? 'border-amber-200' : 'border-slate-200'}`}>
                         <AvatarFallback className={`font-semibold text-sm ${fb.type === 'revision' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' : 'bg-slate-100 text-slate-700'}`}>
                           {fb.avatar}
                         </AvatarFallback>
                       </Avatar>
-                      <div className="flex flex-col gap-1.5 flex-1">
-                        <div className="flex items-baseline gap-2 justify-between">
+                      <div className="flex flex-1 flex-col gap-1.5">
+                        <div className="flex items-baseline justify-between gap-2">
                           <div className="flex items-center gap-2">
-                            <span className="font-semibold text-sm text-slate-900 dark:text-slate-100">{fb.author}</span>
-                            <span className="text-xs font-medium text-slate-500 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">{fb.role}</span>
+                            <span className="font-semibold text-slate-900 text-sm dark:text-slate-100">{fb.author}</span>
+                            <span className="rounded bg-slate-100 px-1.5 py-0.5 font-medium text-slate-500 text-xs dark:bg-slate-800">{fb.role}</span>
                           </div>
-                          <span className="text-[11px] font-medium text-slate-400">{fb.date}</span>
+                          <span className="font-medium text-[11px] text-slate-400">{fb.date}</span>
                         </div>
-                        <div className={`p-4 rounded-xl text-sm leading-relaxed border ${
+                        <div className={`rounded-xl border p-4 text-sm leading-relaxed ${
                           fb.type === 'revision' 
-                            ? 'bg-amber-50/50 border-amber-100 text-amber-900 dark:bg-amber-900/10 dark:border-amber-800/50 dark:text-amber-200' 
-                            : 'bg-white border-slate-200 text-slate-700 dark:bg-slate-950 dark:border-slate-800 dark:text-slate-300'
+                            ? 'border-amber-100 bg-amber-50/50 text-amber-900 dark:border-amber-800/50 dark:bg-amber-900/10 dark:text-amber-200' 
+                            : 'border-slate-200 bg-white text-slate-700 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300'
                         }`}>
                           {fb.text}
                           {fb.type === 'revision' && (
-                            <Badge className="mt-3 block w-fit bg-amber-500 hover:bg-amber-600 border-0 rounded-sm px-2 py-0">Required Revision</Badge>
+                            <Badge className="mt-3 block w-fit rounded-sm border-0 bg-amber-500 px-2 py-0 hover:bg-amber-600">Required Revision</Badge>
                           )}
                         </div>
                       </div>
@@ -263,17 +259,17 @@ export default function ProposalDetailsPage() {
               </div>
 
               {/* Reply Area */}
-              <div className="w-full md:w-1/2 lg:w-2/5 p-6 flex flex-col bg-white dark:bg-slate-950">
-                <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-4">Post a Response or Note</h3>
+              <div className="flex w-full flex-col bg-white p-6 md:w-1/2 lg:w-2/5 dark:bg-slate-950">
+                <h3 className="mb-4 font-semibold text-slate-800 text-sm dark:text-slate-200">Post a Response or Note</h3>
                 <Textarea 
                   placeholder="Type your response or internal note here..." 
-                  className="flex-1 min-h-[200px] resize-none border-slate-200 dark:border-slate-800 focus-visible:ring-blue-500 bg-slate-50 dark:bg-slate-900/50 rounded-xl"
+                  className="min-h-[200px] flex-1 resize-none rounded-xl border-slate-200 bg-slate-50 focus-visible:ring-blue-500 dark:border-slate-800 dark:bg-slate-900/50"
                 />
-                <div className="flex justify-between items-center mt-4">
-                  <Button variant="ghost" size="icon" className="text-slate-500 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+                <div className="mt-4 flex items-center justify-between">
+                  <Button variant="ghost" size="icon" className="rounded-full text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
                     <Paperclip className="h-4 w-4" />
                   </Button>
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium shadow-sm transition-all border-0 px-6">
+                  <Button className="rounded-full border-0 bg-blue-600 px-6 font-medium text-white shadow-sm transition-all hover:bg-blue-700">
                     <Send className="mr-2 h-4 w-4" /> Send Update
                   </Button>
                 </div>
@@ -284,28 +280,31 @@ export default function ProposalDetailsPage() {
 
           {/* History Tab */}
           <TabsContent value="history" className="mt-0 focus-visible:outline-none">
-            <Card className="shadow-none border-slate-200/50 dark:border-slate-800/50 rounded-xl w-full max-w-3xl">
-              <CardHeader className="border-b border-slate-100 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-900/10 pb-4">
+            <Card className="w-full max-w-3xl rounded-xl border-slate-200/50 shadow-none dark:border-slate-800/50">
+              <CardHeader className="border-slate-100 border-b bg-slate-50/30 pb-4 dark:border-slate-800 dark:bg-slate-900/10">
                 <CardTitle className="text-lg text-slate-800 dark:text-slate-200">Revision History</CardTitle>
                 <CardDescription>Track all versions and status changes for this proposal.</CardDescription>
               </CardHeader>
               <CardContent className="pt-6">
                 <div className="space-y-8">
                   {history.map((item, i) => (
-                    <div key={i} className="flex gap-6 relative">
+                    <div
+                      key={`${item.version}-${item.date}-${item.action}`}
+                      className="relative flex gap-6"
+                    >
                       {i !== history.length - 1 && (
-                        <div className="absolute left-[5.5rem] top-8 bottom-[-2rem] w-px bg-slate-200 dark:bg-slate-800" />
+                        <div className="absolute top-8 bottom-[-2rem] left-[5.5rem] w-px bg-slate-200 dark:bg-slate-800" />
                       )}
-                      <div className="w-16 shrink-0 text-right pt-1">
-                        <Badge variant="outline" className="font-semibold bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-300 rounded border-slate-200 border">{item.version}</Badge>
+                      <div className="w-16 shrink-0 pt-1 text-right">
+                        <Badge variant="outline" className="rounded border border-slate-200 bg-slate-50 font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">{item.version}</Badge>
                       </div>
-                      <div className="relative z-10 w-3 h-3 rounded-full bg-blue-500 ring-4 ring-white dark:ring-slate-950 mt-1.5 shrink-0" />
-                      <div className="flex flex-col gap-1 pb-2 flex-1">
+                      <div className="relative z-10 mt-1.5 h-3 w-3 shrink-0 rounded-full bg-blue-500 ring-4 ring-white dark:ring-slate-950" />
+                      <div className="flex flex-1 flex-col gap-1 pb-2">
                         <p className="font-medium text-slate-800 dark:text-slate-100">{item.action}</p>
-                        <p className="text-sm text-slate-500">By {item.author}</p>
-                        <p className="text-xs font-medium text-slate-400 mt-1 uppercase tracking-wider">{item.date}</p>
+                        <p className="text-slate-500 text-sm">By {item.author}</p>
+                        <p className="mt-1 font-medium text-slate-400 text-xs uppercase tracking-wider">{item.date}</p>
                       </div>
-                      <Button variant="outline" size="sm" className="hidden sm:flex rounded-full text-xs h-8">View Version</Button>
+                      <Button variant="outline" size="sm" className="hidden h-8 rounded-full text-xs sm:flex">View Version</Button>
                     </div>
                   ))}
                 </div>

@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { ThemeSwitcher } from "@/app/(main)/dashboard/_components/sidebar/theme-switcher";
@@ -17,7 +17,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b px-4 lg:px-6">
           <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-1" />
-            <h1 className="text-lg font-semibold tracking-tight">Admin Console</h1>
+            <h1 className="font-semibold text-lg tracking-tight">Admin Console</h1>
           </div>
           <div className="flex items-center gap-2">
             <ThemeSwitcher />

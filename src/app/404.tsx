@@ -27,18 +27,18 @@ export default function NotFound404() {
   return (
     <div className="relative flex min-h-dvh flex-col items-center justify-center bg-background px-4 py-10">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-28 left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-gradient-to-b from-blue-600/10 to-transparent blur-2xl" />
+        <div className="-top-28 -translate-x-1/2 absolute left-1/2 h-72 w-[42rem] rounded-full bg-gradient-to-b from-blue-600/10 to-transparent blur-2xl" />
       </div>
 
       <Card className="relative w-full max-w-md overflow-hidden rounded-2xl shadow-sm ring-1 ring-foreground/10">
         <CardHeader className="space-y-3">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600/10 text-blue-700 ring-1 ring-blue-600/20 dark:text-blue-400 dark:bg-blue-400/10">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600/10 text-blue-700 ring-1 ring-blue-600/20 dark:bg-blue-400/10 dark:text-blue-400">
               <Lock className="h-5 w-5" />
             </div>
             <div className="min-w-0">
               <CardTitle className="text-xl sm:text-2xl">Not Found or Access Denied</CardTitle>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-1 text-muted-foreground text-sm">
                 The page you requested doesn&apos;t exist, or you don&apos;t have permission to view it.
               </p>
             </div>

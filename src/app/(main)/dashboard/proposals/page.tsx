@@ -6,9 +6,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import {
   Table,
@@ -21,17 +18,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -126,20 +112,20 @@ export default function ProposalsPage() {
   });
 
   return (
-    <div className="flex flex-1 flex-col gap-6 p-6 lg:p-10 max-w-7xl mx-auto w-full">
+    <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 p-6 lg:p-10">
       {/* Header Section */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+          <h1 className="font-semibold text-3xl text-slate-900 tracking-tight dark:text-slate-100">
             Proposals Management
           </h1>
-          <p className="text-sm text-slate-500 mt-1 dark:text-slate-400">
+          <p className="mt-1 text-slate-500 text-sm dark:text-slate-400">
             Create, track, and manage the lifecycle of your research proposals.
           </p>
         </div>
         
         <Link href="/dashboard/proposals/new" className="w-full sm:w-auto">
-          <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow hover:shadow-md transition-all w-full rounded-full px-6 font-medium border-0">
+          <Button className="w-full rounded-full border-0 bg-gradient-to-r from-blue-600 to-indigo-600 px-6 font-medium text-white shadow transition-all hover:from-blue-700 hover:to-indigo-700 hover:shadow-md">
             <Plus className="mr-2 h-4 w-4" /> New Proposal
           </Button>
         </Link>
@@ -147,9 +133,9 @@ export default function ProposalsPage() {
 
       <div className="flex flex-col gap-4">
         <Tabs defaultValue="all" value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-            <div className="overflow-x-auto pb-1 w-full md:w-auto -mb-1 scrollbar-hide">
-              <TabsList className="bg-slate-100/50 dark:bg-slate-900/50 p-1 border border-slate-200/50 dark:border-slate-800/50 rounded-lg">
+          <div className="mb-6 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+            <div className="-mb-1 scrollbar-hide w-full overflow-x-auto pb-1 md:w-auto">
+              <TabsList className="rounded-lg border border-slate-200/50 bg-slate-100/50 p-1 dark:border-slate-800/50 dark:bg-slate-900/50">
                 <TabsTrigger value="all" className="rounded-md px-4 data-[state=active]:shadow-sm">All</TabsTrigger>
                 <TabsTrigger value="drafts" className="rounded-md px-4 data-[state=active]:shadow-sm">Drafts</TabsTrigger>
                 <TabsTrigger value="submitted" className="rounded-md px-4 data-[state=active]:shadow-sm">Submitted</TabsTrigger>
@@ -159,32 +145,32 @@ export default function ProposalsPage() {
               </TabsList>
             </div>
             
-            <div className="flex w-full md:w-auto items-center gap-2">
+            <div className="flex w-full items-center gap-2 md:w-auto">
               <div className="relative w-full md:w-[240px]">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-500" />
+                <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-slate-500" />
                 <Input
                   type="search"
                   placeholder="Search proposals..."
-                  className="w-full pl-9 rounded-full bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 shadow-sm"
+                  className="w-full rounded-full border-slate-200 bg-white pl-9 shadow-sm dark:border-slate-800 dark:bg-slate-950"
                 />
               </div>
-              <Button variant="outline" size="icon" className="shrink-0 rounded-full bg-white dark:bg-slate-950 shadow-sm border-slate-200 dark:border-slate-800">
+              <Button variant="outline" size="icon" className="shrink-0 rounded-full border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
                 <Filter className="h-4 w-4 text-slate-600" />
               </Button>
             </div>
           </div>
 
           <TabsContent value={activeTab} className="mt-0 focus-visible:outline-none focus-visible:ring-0">
-            <Card className="shadow-none border-slate-200/60 dark:border-slate-800/60 bg-white dark:bg-slate-950/50 rounded-xl overflow-hidden">
+            <Card className="overflow-hidden rounded-xl border-slate-200/60 bg-white shadow-none dark:border-slate-800/60 dark:bg-slate-950/50">
               <CardContent className="p-0">
                 <Table>
                 <TableHeader className="bg-slate-50/50 dark:bg-slate-900/20">
-                  <TableRow className="border-slate-100 dark:border-slate-800 hover:bg-transparent">
-                    <TableHead className="text-slate-500 font-medium h-11 px-6 w-[100px]">ID</TableHead>
-                    <TableHead className="text-slate-500 font-medium h-11 px-6">Proposal Details</TableHead>
-                    <TableHead className="text-slate-500 font-medium h-11 px-6">Status</TableHead>
-                    <TableHead className="text-slate-500 font-medium h-11 px-6 hidden md:table-cell">Last Updated</TableHead>
-                    <TableHead className="text-slate-500 font-medium h-11 px-6 text-right">Actions</TableHead>
+                  <TableRow className="border-slate-100 hover:bg-transparent dark:border-slate-800">
+                    <TableHead className="h-11 w-[100px] px-6 font-medium text-slate-500">ID</TableHead>
+                    <TableHead className="h-11 px-6 font-medium text-slate-500">Proposal Details</TableHead>
+                    <TableHead className="h-11 px-6 font-medium text-slate-500">Status</TableHead>
+                    <TableHead className="hidden h-11 px-6 font-medium text-slate-500 md:table-cell">Last Updated</TableHead>
+                    <TableHead className="h-11 px-6 text-right font-medium text-slate-500">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -192,49 +178,49 @@ export default function ProposalsPage() {
                     filteredProposals.map((proposal) => (
                       <TableRow
                         key={proposal.id}
-                        className="border-slate-100 dark:border-slate-800/50 transition-colors hover:bg-slate-50/50 dark:hover:bg-slate-800/20"
+                        className="border-slate-100 transition-colors hover:bg-slate-50/50 dark:border-slate-800/50 dark:hover:bg-slate-800/20"
                       >
-                        <TableCell className="font-medium text-slate-600 dark:text-slate-400 py-4 px-6 text-xs">
+                        <TableCell className="px-6 py-4 font-medium text-slate-600 text-xs dark:text-slate-400">
                           {proposal.id}
                         </TableCell>
-                        <TableCell className="py-4 px-6 max-w-[300px] lg:max-w-[400px]">
+                        <TableCell className="max-w-[300px] px-6 py-4 lg:max-w-[400px]">
                           <div className="flex flex-col gap-1.5">
-                            <span className="font-semibold text-slate-800 dark:text-slate-200 line-clamp-1">
+                            <span className="line-clamp-1 font-semibold text-slate-800 dark:text-slate-200">
                               {proposal.title}
                             </span>
-                            <span className="text-xs text-slate-500 line-clamp-1">
+                            <span className="line-clamp-1 text-slate-500 text-xs">
                               {proposal.abstract}
                             </span>
                           </div>
                         </TableCell>
-                        <TableCell className="py-4 px-6">
+                        <TableCell className="px-6 py-4">
                           <Badge
                             variant="outline"
-                            className={`${proposal.color} shadow-none inline-flex items-center rounded px-2.5 py-0.5 whitespace-nowrap`}
+                            className={`${proposal.color} inline-flex items-center whitespace-nowrap rounded px-2.5 py-0.5 shadow-none`}
                           >
                             {proposal.status}
                           </Badge>
                         </TableCell>
-                        <TableCell className="py-4 px-6 hidden md:table-cell">
+                        <TableCell className="hidden px-6 py-4 md:table-cell">
                           <div className="flex flex-col gap-1">
-                            <span className="text-sm text-slate-700 dark:text-slate-300">
+                            <span className="text-slate-700 text-sm dark:text-slate-300">
                               {proposal.date}
                             </span>
-                            <span className="text-xs text-slate-500 flex items-center gap-1">
+                            <span className="flex items-center gap-1 text-slate-500 text-xs">
                               <Clock className="h-3 w-3" /> {proposal.lastModified}
                             </span>
                           </div>
                         </TableCell>
-                        <TableCell className="py-4 px-6 text-right">
+                        <TableCell className="px-6 py-4 text-right">
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" className="h-8 w-8 p-0 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+                              <Button variant="ghost" className="h-8 w-8 rounded-full p-0 hover:bg-slate-100 dark:hover:bg-slate-800">
                                 <span className="sr-only">Open menu</span>
                                 <MoreHorizontal className="h-4 w-4 text-slate-500" />
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="w-48 rounded-xl shadow-lg">
-                              <DropdownMenuLabel className="font-normal text-xs text-slate-500">
+                              <DropdownMenuLabel className="font-normal text-slate-500 text-xs">
                                 Proposal Actions
                               </DropdownMenuLabel>
                               <DropdownMenuSeparator />

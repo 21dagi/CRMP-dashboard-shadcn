@@ -23,7 +23,7 @@ const COOKIE_PERMISSIONS_KEY = "user_permissions";
 const COOKIE_TTL_DAYS = 7;
 
 export function AuthInitializer() {
-  const { login, logout, setLoading, access_token } = useAuthStore();
+  const { login, logout, setLoading } = useAuthStore();
 
   useEffect(() => {
     const initSession = async () => {
@@ -74,7 +74,7 @@ export function AuthInitializer() {
 
     initSession();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [login, logout, setLoading]);
 
   return null; // Invisible — renders nothing
 }

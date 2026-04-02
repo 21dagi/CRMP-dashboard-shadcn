@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, } from "@/components/ui/avatar";
 import {
   CheckCircle2,
   Clock,
@@ -130,125 +130,125 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-1 flex-col gap-8">
       {/* Header Section */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+          <h1 className="font-semibold text-3xl text-slate-900 tracking-tight dark:text-slate-100">
             Principal Investigator Dashboard
           </h1>
-          <p className="text-sm text-slate-500 mt-1.5 dark:text-slate-400 font-medium">
+          <p className="mt-1.5 font-medium text-slate-500 text-sm dark:text-slate-400">
             Welcome back. Here&apos;s an overview of your research projects and team.
           </p>
         </div>
-        <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow hover:shadow-md transition-all sm:w-auto w-full rounded-full px-6 font-medium border-0">
+        <Button className="w-full rounded-full border-0 bg-gradient-to-r from-blue-600 to-indigo-600 px-6 font-medium text-white shadow transition-all hover:from-blue-700 hover:to-indigo-700 hover:shadow-md sm:w-auto">
           <Plus className="mr-2 h-4 w-4" /> New Project
         </Button>
       </div>
 
       {/* Summary Cards - Horizontal Scrolling on Mobile */}
-      <div className="flex w-full overflow-x-auto gap-6 pb-2 snap-x snap-mandatory">
-        <Card className="min-w-[280px] flex-1 snap-center shadow-none border-slate-200/50 dark:border-slate-800/50 bg-white dark:bg-slate-950/50 rounded-xl">
+      <div className="flex w-full snap-x snap-mandatory gap-6 overflow-x-auto pb-2">
+        <Card className="min-w-[280px] flex-1 snap-center rounded-xl border-slate-200/50 bg-white shadow-none dark:border-slate-800/50 dark:bg-slate-950/50">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">
+            <CardTitle className="font-medium text-slate-600 text-sm dark:text-slate-400">
               Total Active Projects
             </CardTitle>
-            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+            <div className="rounded-lg bg-blue-50 p-2 dark:bg-blue-900/20">
               <FolderOpen className="h-4 w-4 text-blue-600 dark:text-blue-400" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">12</div>
-            <p className="text-xs text-slate-500 font-medium mt-1.5">+2 from last month</p>
+            <div className="font-bold text-3xl text-slate-900 tracking-tight dark:text-slate-100">12</div>
+            <p className="mt-1.5 font-medium text-slate-500 text-xs">+2 from last month</p>
           </CardContent>
         </Card>
         
-        <Card className="min-w-[280px] flex-1 snap-center shadow-none border-slate-200/50 dark:border-slate-800/50 bg-white dark:bg-slate-950/50 rounded-xl">
+        <Card className="min-w-[280px] flex-1 snap-center rounded-xl border-slate-200/50 bg-white shadow-none dark:border-slate-800/50 dark:bg-slate-950/50">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">
+            <CardTitle className="font-medium text-slate-600 text-sm dark:text-slate-400">
               Pending Proposals
             </CardTitle>
-            <div className="p-2 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
+            <div className="rounded-lg bg-amber-50 p-2 dark:bg-amber-900/20">
               <FileText className="h-4 w-4 text-amber-600 dark:text-amber-400" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">4</div>
-            <p className="text-xs text-slate-500 font-medium mt-1.5">2 awaiting faculty review</p>
+            <div className="font-bold text-3xl text-slate-900 tracking-tight dark:text-slate-100">4</div>
+            <p className="mt-1.5 font-medium text-slate-500 text-xs">2 awaiting faculty review</p>
           </CardContent>
         </Card>
         
-        <Card className="min-w-[280px] flex-1 snap-center shadow-none border-slate-200/50 dark:border-slate-800/50 bg-white dark:bg-slate-950/50 rounded-xl">
+        <Card className="min-w-[280px] flex-1 snap-center rounded-xl border-slate-200/50 bg-white shadow-none dark:border-slate-800/50 dark:bg-slate-950/50">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">
+            <CardTitle className="font-medium text-slate-600 text-sm dark:text-slate-400">
               Team Members
             </CardTitle>
-            <div className="p-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+            <div className="rounded-lg bg-emerald-50 p-2 dark:bg-emerald-900/20">
               <Users className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">24</div>
-            <p className="text-xs text-slate-500 font-medium mt-1.5">Across all active projects</p>
+            <div className="font-bold text-3xl text-slate-900 tracking-tight dark:text-slate-100">24</div>
+            <p className="mt-1.5 font-medium text-slate-500 text-xs">Across all active projects</p>
           </CardContent>
         </Card>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-3 md:grid-cols-1">
+      <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-3">
         {/* Project List / Insights */}
-        <div className="lg:col-span-2 flex flex-col gap-6">
-          <Card className="shadow-none border-slate-200/50 dark:border-slate-800/50 bg-white dark:bg-slate-950/50 rounded-xl h-full flex flex-col overflow-hidden">
-            <CardHeader className="border-b border-slate-100 dark:border-slate-800/50 bg-slate-50/30 dark:bg-slate-900/10 pb-4">
-              <div className="flex justify-between items-center">
+        <div className="flex flex-col gap-6 lg:col-span-2">
+          <Card className="flex h-full flex-col overflow-hidden rounded-xl border-slate-200/50 bg-white shadow-none dark:border-slate-800/50 dark:bg-slate-950/50">
+            <CardHeader className="border-slate-100 border-b bg-slate-50/30 pb-4 dark:border-slate-800/50 dark:bg-slate-900/10">
+              <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="text-lg text-slate-800 dark:text-slate-200 font-semibold tracking-tight">
+                  <CardTitle className="font-semibold text-lg text-slate-800 tracking-tight dark:text-slate-200">
                     Active Projects Oversight
                   </CardTitle>
-                  <CardDescription className="text-sm mt-1 font-medium text-slate-500">
+                  <CardDescription className="mt-1 font-medium text-slate-500 text-sm">
                     Track the progress and status of your ongoing research grants.
                   </CardDescription>
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="p-0 flex-1">
+            <CardContent className="flex-1 p-0">
               <Table>
                 <TableHeader>
-                  <TableRow className="border-slate-100 dark:border-slate-800 hover:bg-transparent">
-                    <TableHead className="text-slate-500 font-medium tracking-tight h-11 px-6">Project Name</TableHead>
-                    <TableHead className="text-slate-500 font-medium tracking-tight h-11 px-6">Status</TableHead>
-                    <TableHead className="text-slate-500 font-medium hidden sm:table-cell tracking-tight h-11 px-6">Progress</TableHead>
-                    <TableHead className="text-slate-500 font-medium text-right tracking-tight h-11 px-6">Action</TableHead>
+                  <TableRow className="border-slate-100 hover:bg-transparent dark:border-slate-800">
+                    <TableHead className="h-11 px-6 font-medium text-slate-500 tracking-tight">Project Name</TableHead>
+                    <TableHead className="h-11 px-6 font-medium text-slate-500 tracking-tight">Status</TableHead>
+                    <TableHead className="hidden h-11 px-6 font-medium text-slate-500 tracking-tight sm:table-cell">Progress</TableHead>
+                    <TableHead className="h-11 px-6 text-right font-medium text-slate-500 tracking-tight">Action</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {projects.map((project) => (
                     <TableRow
                       key={project.name}
-                      className="border-slate-100 dark:border-slate-800/50 transition-colors hover:bg-slate-50/50 dark:hover:bg-slate-800/20 group"
+                      className="group border-slate-100 transition-colors hover:bg-slate-50/50 dark:border-slate-800/50 dark:hover:bg-slate-800/20"
                     >
-                      <TableCell className="font-medium text-slate-800 dark:text-slate-200 py-4 px-6">
+                      <TableCell className="px-6 py-4 font-medium text-slate-800 dark:text-slate-200">
                         {project.name}
-                        <div className="text-xs text-slate-500 mt-0.5 sm:hidden">{project.team} members</div>
+                        <div className="mt-0.5 text-slate-500 text-xs sm:hidden">{project.team} members</div>
                       </TableCell>
-                      <TableCell className="py-4 px-6">
+                      <TableCell className="px-6 py-4">
                         <Badge
                           variant="outline"
-                          className={`${project.badgeColor} shadow-none inline-flex items-center rounded px-2.5 py-0.5`}
+                          className={`${project.badgeColor} inline-flex items-center rounded px-2.5 py-0.5 shadow-none`}
                         >
                           {project.status}
                         </Badge>
                       </TableCell>
-                      <TableCell className="hidden sm:table-cell w-[30%] py-4 px-6">
+                      <TableCell className="hidden w-[30%] px-6 py-4 sm:table-cell">
                         <div className="flex items-center gap-3">
                           <Progress
                             value={project.progress}
-                            className="h-1.5 bg-slate-100 dark:bg-slate-800 w-full"
+                            className="h-1.5 w-full bg-slate-100 dark:bg-slate-800"
                           />
-                          <span className="text-xs text-slate-500 font-medium min-w-[3.5ch]">
+                          <span className="min-w-[3.5ch] font-medium text-slate-500 text-xs">
                             {project.progress}%
                           </span>
                         </div>
                       </TableCell>
-                      <TableCell className="text-right py-4 px-6">
-                        <Button variant="ghost" size="sm" className="font-medium text-blue-600 dark:text-blue-400 group-hover:bg-blue-50 group-hover:dark:bg-blue-900/20 rounded-full h-8 px-3">
+                      <TableCell className="px-6 py-4 text-right">
+                        <Button variant="ghost" size="sm" className="h-8 rounded-full px-3 font-medium text-blue-600 group-hover:bg-blue-50 dark:text-blue-400 group-hover:dark:bg-blue-900/20">
                           View <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
                         </Button>
                       </TableCell>
@@ -261,45 +261,48 @@ export default function DashboardPage() {
         </div>
 
         {/* Right Sidebar - Notifications and Activity Feed */}
-        <div className="lg:col-span-1 flex flex-col gap-6">
+        <div className="flex flex-col gap-6 lg:col-span-1">
           
           {/* Notifications / Direct Messages */}
-          <Card className="shadow-none border-slate-200/50 dark:border-slate-800/50 bg-white dark:bg-slate-950/50 rounded-xl">
-            <CardHeader className="border-b border-slate-100 dark:border-slate-800/50 bg-slate-50/30 dark:bg-slate-900/10 pb-4">
-              <div className="flex justify-between items-center">
-                <CardTitle className="text-lg text-slate-800 dark:text-slate-200 font-semibold tracking-tight">
+          <Card className="rounded-xl border-slate-200/50 bg-white shadow-none dark:border-slate-800/50 dark:bg-slate-950/50">
+            <CardHeader className="border-slate-100 border-b bg-slate-50/30 pb-4 dark:border-slate-800/50 dark:bg-slate-900/10">
+              <div className="flex items-center justify-between">
+                <CardTitle className="font-semibold text-lg text-slate-800 tracking-tight dark:text-slate-200">
                   Recent Messages
                 </CardTitle>
-                <Badge variant="secondary" className="bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 shadow-none border-0 font-semibold px-2 hover:bg-blue-100">
+                <Badge variant="secondary" className="border-0 bg-blue-100 px-2 font-semibold text-blue-700 shadow-none hover:bg-blue-100 dark:bg-blue-900/40 dark:text-blue-300">
                   3 New
                 </Badge>
               </div>
             </CardHeader>
-            <CardContent className="pt-6 px-4 sm:px-6">
+            <CardContent className="px-4 pt-6 sm:px-6">
               <div className="flex flex-col gap-5">
-                {directMessages.map((msg, i) => (
-                  <div key={i} className="flex gap-4 items-start group cursor-pointer">
+                {directMessages.map((msg) => (
+                  <div
+                    key={`${msg.sender}-${msg.time}`}
+                    className="group flex cursor-pointer items-start gap-4"
+                  >
                     <div className="relative mt-1">
-                      <Avatar className="h-10 w-10 border border-slate-100 dark:border-slate-800 group-hover:ring-2 ring-blue-500/30 transition-all">
+                      <Avatar className="h-10 w-10 border border-slate-100 ring-blue-500/30 transition-all group-hover:ring-2 dark:border-slate-800">
                         <AvatarFallback className={`${msg.avatarColor} font-semibold text-sm`}>
                           {msg.avatar}
                         </AvatarFallback>
                       </Avatar>
                       {msg.unread && (
-                        <div className="absolute top-0 right-0 w-2.5 h-2.5 bg-blue-500 rounded-full ring-2 ring-white dark:ring-slate-950" />
+                        <div className="absolute top-0 right-0 h-2.5 w-2.5 rounded-full bg-blue-500 ring-2 ring-white dark:ring-slate-950" />
                       )}
                     </div>
-                    <div className="flex flex-col flex-1 overflow-hidden">
-                      <div className="flex justify-between items-baseline gap-2">
-                        <p className={`text-sm truncate ${msg.unread ? 'font-semibold text-slate-900 dark:text-slate-100' : 'font-medium text-slate-800 dark:text-slate-200'}`}>
+                    <div className="flex flex-1 flex-col overflow-hidden">
+                      <div className="flex items-baseline justify-between gap-2">
+                        <p className={`truncate text-sm ${msg.unread ? 'font-semibold text-slate-900 dark:text-slate-100' : 'font-medium text-slate-800 dark:text-slate-200'}`}>
                           {msg.sender}
                         </p>
-                        <p className="text-[10px] text-slate-400 font-medium shrink-0 whitespace-nowrap">
+                        <p className="shrink-0 whitespace-nowrap font-medium text-[10px] text-slate-400">
                           {msg.time}
                         </p>
                       </div>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1 leading-none">{msg.role}</p>
-                      <p className={`text-[13px] line-clamp-2 leading-relaxed ${msg.unread ? 'text-slate-700 dark:text-slate-300 font-medium' : 'text-slate-500 dark:text-slate-400'}`}>
+                      <p className="mb-1 text-[11px] text-slate-500 leading-none dark:text-slate-400">{msg.role}</p>
+                      <p className={`line-clamp-2 text-[13px] leading-relaxed ${msg.unread ? 'font-medium text-slate-700 dark:text-slate-300' : 'text-slate-500 dark:text-slate-400'}`}>
                         {msg.message}
                       </p>
                     </div>
@@ -310,37 +313,40 @@ export default function DashboardPage() {
           </Card>
 
           {/* Activity Feed */}
-          <Card className="shadow-none border-slate-200/50 dark:border-slate-800/50 bg-white dark:bg-slate-950/50 rounded-xl flex-1">
-            <CardHeader className="border-b border-slate-100 dark:border-slate-800/50 bg-slate-50/30 dark:bg-slate-900/10 pb-4">
-              <CardTitle className="text-lg text-slate-800 dark:text-slate-200 font-semibold tracking-tight">
+          <Card className="flex-1 rounded-xl border-slate-200/50 bg-white shadow-none dark:border-slate-800/50 dark:bg-slate-950/50">
+            <CardHeader className="border-slate-100 border-b bg-slate-50/30 pb-4 dark:border-slate-800/50 dark:bg-slate-900/10">
+              <CardTitle className="font-semibold text-lg text-slate-800 tracking-tight dark:text-slate-200">
                 Activity Feed
               </CardTitle>
             </CardHeader>
-            <CardContent className="pt-6 px-6">
+            <CardContent className="px-6 pt-6">
               <div className="space-y-6">
                 {activities.map((act, i) => (
-                  <div key={i} className="flex gap-4 items-start relative group">
+                  <div
+                    key={`${act.title}-${act.time}`}
+                    className="group relative flex items-start gap-4"
+                  >
                     {/* Timeline Line */}
                     {i !== activities.length - 1 && (
-                      <div className="absolute left-[15px] top-10 bottom-[-24px] w-px bg-slate-100 dark:bg-slate-800 transition-colors" />
+                      <div className="absolute top-10 bottom-[-24px] left-[15px] w-px bg-slate-100 transition-colors dark:bg-slate-800" />
                     )}
                     
                     <div className="relative z-10 flex items-center justify-center">
                       <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center ring-4 ring-white dark:ring-slate-950 ${act.color}`}
+                        className={`flex h-8 w-8 items-center justify-center rounded-full ring-4 ring-white dark:ring-slate-950 ${act.color}`}
                       >
-                        <act.icon className="w-3.5 h-3.5" />
+                        <act.icon className="h-3.5 w-3.5" />
                       </div>
                     </div>
                     
                     <div className="flex flex-col gap-1 pb-1">
-                      <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 leading-none">
+                      <p className="font-semibold text-slate-800 text-sm leading-none dark:text-slate-200">
                         {act.title}
                       </p>
-                      <p className="text-[13px] text-slate-500 leading-relaxed mt-1">
+                      <p className="mt-1 text-[13px] text-slate-500 leading-relaxed">
                         {act.desc}
                       </p>
-                      <p className="text-[10px] text-slate-400 font-semibold mt-1.5 uppercase tracking-wider">
+                      <p className="mt-1.5 font-semibold text-[10px] text-slate-400 uppercase tracking-wider">
                         {act.time}
                       </p>
                     </div>

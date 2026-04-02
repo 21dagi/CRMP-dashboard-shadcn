@@ -59,7 +59,7 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
-          <div className="px-2 pb-2 text-xs text-muted-foreground w-full text-center">
+          <div className="w-full px-2 pb-2 text-center text-muted-foreground text-xs">
             Logged in as: <span className="font-bold">{user?.role || "Unknown"}</span>
           </div>
         </SidebarMenu>

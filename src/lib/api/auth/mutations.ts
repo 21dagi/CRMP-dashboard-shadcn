@@ -41,7 +41,7 @@ export async function loginUser(credentials: LoginCredentials): Promise<LoginRes
  * Registers a new user. Does NOT auto-login (user must sign in separately).
  * passwordConfirm is validated client-side only — not sent here.
  */
-export async function registerUser(payload: {
+export async function registerUser(_payload: {
   email: string;
   password: string;
   fullName: string;

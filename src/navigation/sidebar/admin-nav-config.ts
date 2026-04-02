@@ -12,7 +12,7 @@ import {
   BarChart,
   History,
   Settings,
-  LucideIcon
+  type LucideIcon
 } from "lucide-react";
 
 import { ADMIN_SIDEBAR_PERMISSION_RULES } from "@/access-control/sidebar-permission-config";
