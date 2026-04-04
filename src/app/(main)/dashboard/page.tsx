@@ -298,8 +298,6 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
         </div>
-
-        {/* Right Sidebar - Notifications and Activity Feed */}
         <div className="flex flex-col gap-6 lg:col-span-1">
 
 
